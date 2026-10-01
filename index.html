@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для моей любимой Камилы (Бопони) ❤️</title>
+    
+    <!-- Подключение Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Красивые романтичные шрифты Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Montserrat:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <!-- Иконки FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at center, #2d0b1e 0%, #1a0511 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            color: #fce4ec;
+        }
+
+        .font-love {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .font-cute {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        /* Анимация пульсации стартовой кнопки */
+        @keyframes pulse-glow {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 64, 129, 0.5), 0 0 40px rgba(255, 105, 180, 0.3);
+            }
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 0 35px rgba(255, 64, 129, 0.9), 0 0 60px rgba(255, 105, 180, 0.6);
+            }
+        }
+
+        .pulse-btn {
+            animation: pulse-glow 2.2s infinite ease-in-out;
+        }
+
+        /* Анимация пульсации главного сердца */
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 25px rgba(255, 23, 68, 0.7));
+            }
+            15% {
+                transform: scale(1.07);
+                filter: drop-shadow(0 0 40px rgba(255, 23, 68, 0.9));
+            }
+            30% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 25px rgba(255, 23, 68, 0.7));
+            }
+            45% {
+                transform: scale(1.13);
+                filter: drop-shadow(0 0 50px rgba(255, 23, 68, 1));
+            }
+        }
+
+        .beating-heart {
+            animation: heartBeat 1.8s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        /* Падающие сердечки и звездочки */
+        .falling-item {
+            position: fixed;
+            top: -50px;
+            z-index: 10;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+
+        /* Стили для конверта */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope {
+            width: 290px;
+            height: 190px;
+            background: linear-gradient(135deg, #e91e63, #ff4081);
+            position: relative;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 145px solid transparent;
+            border-right: 145px solid transparent;
+            border-top: 105px solid #d81b60;
+            transform-origin: top;
+            transition: transform 0.5s ease 0.3s, z-index 0.2s;
+            z-index: 3;
+        }
+
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            right: 15px;
+            height: 170px;
+            background: #fff0f5;
+            border-radius: 8px;
+            padding: 16px;
+            transition: transform 0.5s ease;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            color: #4a0e17;
+        }
+
+        .envelope.open .letter {
+            transform: translateY(-90px);
+            z-index: 4;
+            height: 220px;
+        }
+
+        /* Текст с неоновым свечением */
+        @keyframes heartGlow {
+            0%, 100% {
+                text-shadow: 0 0 10px #fff, 0 0 20px #ff1744, 0 0 30px #ff1744;
+            }
+            50% {
+                text-shadow: 0 0 20px #fff, 0 0 35px #ff4081, 0 0 50px #ff4081;
+            }
+        }
+
+        .glow-text {
+            animation: heartGlow 2.5s infinite alternate;
+        }
+
+        #sparkleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="relative flex flex-col items-center justify-between min-h-screen">
+
+    <!-- Canvas для взрыва искорок и салюта -->
+    <canvas id="sparkleCanvas"></canvas>
+
+    <header class="w-full max-w-4xl p-4 flex justify-between items-center z-20">
+        <div class="flex items-center space-x-2 bg-pink-950/60 border border-pink-500/30 backdrop-blur-md px-4 py-2 rounded-full shadow-lg">
+            <i class="fas fa-crown text-amber-300 text-sm"></i>
+            <span class="text-pink-200 font-semibold text-xs sm:text-sm">Для моей Камилы ❤️</span>
+        </div>
+        <button id="musicToggle" title="Включить/выключить мелодию" class="bg-pink-900/60 hover:bg-pink-800 border border-pink-500/40 p-3 rounded-full shadow-lg text-pink-300 transition duration-300 focus:outline-none flex items-center justify-center">
+            <i id="musicIcon" class="fas fa-volume-mute text-lg"></i>
+        </button>
+    </header>
+
+    <div id="welcomeModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-lg p-4 transition-opacity duration-700">
+        <div class="bg-gradient-to-b from-pink-950/90 to-purple-950/90 border border-pink-500/40 rounded-3xl p-8 sm:p-12 max-w-md w-full text-center shadow-[0_0_50px_rgba(255,20,147,0.3)] transform transition-all scale-100">
+            <div class="mb-6 relative inline-block">
+                <i class="fas fa-heart text-pink-500 text-6xl animate-bounce"></i>
+                <i class="fas fa-sparkles text-amber-300 text-xl absolute -top-2 -right-2 animate-pulse"></i>
+            </div>
+            
+            <h2 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-200 to-amber-200 mb-2 font-cute">
+                Привет, Камила! ✨
+            </h2>
+            <p class="text-pink-300/80 text-sm mb-8 font-medium">Моя любимая Бопоня, у меня для тебя кое-что есть...</p>
+            
+            <button id="startBtn" class="pulse-btn bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold py-4 px-8 rounded-full shadow-xl transition duration-300 w-full flex items-center justify-center space-x-3 text-lg">
+                <i class="fas fa-hand-pointer text-amber-200"></i>
+                <span>Нажми сюда, Бопоня</span>
+                <i class="fas fa-heart text-white"></i>
+            </button>
+        </div>
+    </div>
+
+    <main id="mainContent" class="w-full max-w-4xl px-4 py-6 flex flex-col items-center opacity-0 transition-opacity duration-1000 z-20">
+        
+        <!-- Секция с Огромным Сердцем -->
+        <section class="relative my-4 text-center flex flex-col items-center justify-center w-full">
+            <p class="text-pink-300/80 text-xs sm:text-sm mb-3 font-medium uppercase tracking-widest">( Нажми на сердце для праздничного салюта! )</p>
+            
+            <div id="heartContainer" class="relative flex items-center justify-center w-80 h-80 sm:w-[420px] sm:h-[420px] transform transition duration-1000 scale-0">
+                <!-- SVG Сердце -->
+                <svg id="mainHeartSvg" viewBox="0 0 32 29" class="w-full h-full beating-heart">
+                    <defs>
+                        <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff2a6d;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#ff0055;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#b0003a;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#heartGrad)" d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,16,19.6,16,19.6s16-10.2,16-19.6C32,3.8,28.2,0,23.6,0z"/>
+                </svg>
+                
+                <!-- Надпись внутри сердца -->
+                <div class="absolute inset-0 flex flex-col items-center justify-center text-white px-8 pointer-events-none">
+                    <h1 class="text-4xl sm:text-6xl font-love glow-text tracking-wider mb-1">I Love You</h1>
+                    <div class="h-0.5 w-24 bg-gradient-to-r from-transparent via-amber-200 to-transparent my-2"></div>
+                    <span class="text-xl sm:text-3xl font-bold text-amber-200 font-cute drop-shadow-md">
+                        Камила
+                    </span>
+                    <span class="text-sm sm:text-lg font-semibold text-pink-200 font-handwriting mt-1">
+                        (Моя Бопоня 💕)
+                    </span>
+                </div>
+            </div>
+
+            <button id="fireworksBtn" class="mt-6 bg-pink-900/50 hover:bg-pink-800/80 border border-pink-400/30 text-pink-200 py-2.5 px-6 rounded-full shadow-lg transition duration-300 text-xs sm:text-sm flex items-center space-x-2">
+                <i class="fas fa-sparkles text-amber-300"></i>
+                <span>Запустить салют для Бопони!</span>
+            </button>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mt-8">
+            
+            <!-- Конверт с нежным письмом -->
+            <div class="bg-gradient-to-b from-pink-950/40 to-purple-950/40 backdrop-blur-md rounded-3xl p-6 shadow-2xl border border-pink-500/20 flex flex-col items-center justify-center min-h-[320px]">
+                <h3 class="text-lg font-bold text-pink-200 mb-6 font-cute flex items-center gap-2">
+                    <i class="fas fa-envelope-open-text text-amber-300"></i>
+                    <span>Особое письмецо ✉️</span>
+                </h3>
+                
+                <div class="envelope-wrapper">
+                    <div id="envelope" class="envelope">
+                        <div class="letter text-center flex flex-col justify-between">
+                            <p class="text-pink-700 font-love text-2xl font-bold">Моей Бопоне ❤️</p>
+                            <p id="letterText" class="text-xs text-gray-800 leading-relaxed font-sans font-medium">
+                                Камила, ты самый светлый и дорогой человек в моей жизни. Спасибо за твое тепло, невероятную улыбку и за то, что ты есть!
+                            </p>
+                            <p class="text-pink-600 text-xs font-bold">Люблю тебя безумно! 💕</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-xs text-pink-300/70 mt-6">Нажми на конверт, чтобы прочесть</p>
+            </div>
+
+            <!-- Генератор любовных признаний -->
+            <div class="bg-gradient-to-b from-pink-950/40 to-purple-950/40 backdrop-blur-md rounded-3xl p-6 shadow-2xl border border-pink-500/20 flex flex-col items-center justify-between min-h-[320px]">
+                <h3 class="text-lg font-bold text-pink-200 mb-4 font-cute flex items-center gap-2">
+                    <i class="fas fa-magic text-amber-300"></i>
+                    <span>Комплименты для Камилы ✨</span>
+                </h3>
+                
+                <div class="my-auto w-full text-center px-2">
+                    <div id="complimentBox" class="bg-pink-950/60 border border-pink-500/30 rounded-2xl p-6 shadow-inner text-pink-100 font-medium text-sm sm:text-base transition-all duration-300 min-h-[110px] flex items-center justify-center">
+                        Нажми на кнопку ниже, чтобы узнать, за что я тебя люблю!
+                    </div>
+                </div>
+
+                <button id="complimentBtn" class="mt-4 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 active:scale-95 text-white font-medium py-3 px-6 rounded-full shadow-lg transition duration-300 flex items-center space-x-2 text-sm">
+                    <i class="fas fa-heart text-amber-200"></i>
+                    <span>Получить признание</span>
+                </button>
+            </div>
+
+        </div>
+
+        <section class="w-full mt-10 bg-gradient-to-r from-pink-950/40 via-purple-950/40 to-pink-950/40 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl border border-pink-500/20">
+            <h3 class="text-xl sm:text-2xl font-bold text-pink-200 mb-6 text-center font-cute">Почему ты самая лучшая, Бопоня 💕</h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-pink-900/30 border border-pink-500/20 p-5 rounded-2xl text-center hover:bg-pink-900/50 transition">
+                    <div class="text-amber-300 text-3xl mb-3"><i class="fas fa-smile-beam"></i></div>
+                    <h4 class="font-bold text-pink-100 text-sm mb-1">Твоя улыбка</h4>
+                    <p class="text-xs text-pink-200/70">Камила, твоя улыбка делает любой день счастливым и особенным.</p>
+                </div>
+                
+                <div class="bg-pink-900/30 border border-pink-500/20 p-5 rounded-2xl text-center hover:bg-pink-900/50 transition">
+                    <div class="text-rose-400 text-3xl mb-3"><i class="fas fa-heart"></i></div>
+                    <h4 class="font-bold text-pink-100 text-sm mb-1">Моя Бопоня</h4>
+                    <p class="text-xs text-pink-200/70">Это прозвище напоминает мне о том, какая ты милая и родная.</p>
+                </div>
+
+                <div class="bg-pink-900/30 border border-pink-500/20 p-5 rounded-2xl text-center hover:bg-pink-900/50 transition">
+                    <div class="text-amber-300 text-3xl mb-3"><i class="fas fa-star"></i></div>
+                    <h4 class="font-bold text-pink-100 text-sm mb-1">Ты уникальна</h4>
+                    <p class="text-xs text-pink-200/70">В мире нет никого прекраснее, добрее и удивительнее тебя!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="w-full text-center py-6 text-xs text-pink-300/50 z-20">
+        Создано с бесконечной любовью для Камилы (Бопони) ✨
+    </footer>
+
+    <script>
+        // Персонализированные комплименты для Камилы
+        const compliments = [
+            "Камила, у тебя самые завораживающие и красивые глаза на свете! ✨",
+            "Моя Бопоня, твоя улыбка способна растопить всё вокруг! 😊",
+            "Ты вдохновляешь меня становиться лучше с каждым днем, Камила 🌟",
+            "С тобой, Бопоня, даже самое простое время превращается в сказку 💕",
+            "Ты невероятно умная, невероятно красивая и самая родная! 🌺",
+            "Твой голос и твой смех — мои самые любимые звуки! 🎶",
+            "Рядом с тобой мир наполняется самыми яркими красками ✨",
+            "Бопоня, ты — лучшее, что случалось в моей жизни! ❤"
+        ];
+
+        // Синтез фоновой нежной мелодии через Web Audio API
+        class RomanticAudio {
+            constructor() {
+                this.ctx = null;
+                this.isPlaying = false;
+                this.timer = null;
+            }
+
+            init() {
+                if (!this.ctx) {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+            }
+
+            playNote(freq, duration) {
+                setTimeout(() => {
+                    if (!this.isPlaying) return;
+                    try {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+                        
+                        gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.08, this.ctx.currentTime + 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                        
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        
+                        osc.start();
+                        osc.stop(this.ctx.currentTime + duration);
+                    } catch(e){}
+                }, 0);
+            }
+
+            startMelody() {
+                this.init();
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+                this.isPlaying = true;
+                
+                const notes = [
+                    261.63, 329.63, 392.00, 523.25, // C
+                    220.00, 261.63, 329.63, 440.00, // Am
+                    174.61, 220.00, 261.63, 349.23, // F
+                    196.00, 246.94, 293.66, 392.00  // G
+                ];
+                
+                let step = 0;
+                const playNext = () => {
+                    if (!this.isPlaying) return;
+                    this.playNote(notes[step % notes.length], 1.6);
+                    step++;
+                    this.timer = setTimeout(playNext, 450);
+                };
+                playNext();
+            }
+
+            stopMelody() {
+                this.isPlaying = false;
+                if (this.timer) clearTimeout(this.timer);
+            }
+        }
+
+        const audio = new RomanticAudio();
+
+        // Падающие сердечки на заднем фоне
+        function createFallingItem() {
+            const items = ['❤️', '💖', '🌸', '✨', '💕', '🌹', '⭐'];
+            const item = document.createElement('div');
+            item.className = 'falling-item';
+            item.innerHTML = items[Math.floor(Math.random() * items.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.fontSize = (Math.random() * 18 + 14) + 'px';
+            item.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            item.style.opacity = Math.random() * 0.7 + 0.3;
+            
+            document.body.appendChild(item);
+
+            setTimeout(() => {
+                item.remove();
+            }, 7000);
+        }
+
+        setInterval(createFallingItem, 450);
+
+        // Canvas Particle System для салютов и искорок
+        const canvas = document.getElementById('sparkleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 6 + 2;
+                this.speedX = Math.random() * 8 - 4;
+                this.speedY = Math.random() * 8 - 4;
+                this.color = `hsl(${Math.random() * 60 + 320}, 100%, 70%)`;
+                this.life = 100;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.size *= 0.95;
+                this.life -= 2;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createSparkles(x, y, amount = 40) {
+            for (let i = 0; i < amount; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        function animateSparkles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0 || particles[i].size <= 0.2) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateSparkles);
+        }
+        animateSparkles();
+
+        // DOM Элементы
+        const startBtn = document.getElementById('startBtn');
+        const welcomeModal = document.getElementById('welcomeModal');
+        const mainContent = document.getElementById('mainContent');
+        const heartContainer = document.getElementById('heartContainer');
+        const mainHeartSvg = document.getElementById('mainHeartSvg');
+        const fireworksBtn = document.getElementById('fireworksBtn');
+        const musicToggle = document.getElementById('musicToggle');
+        const musicIcon = document.getElementById('musicIcon');
+        const envelope = document.getElementById('envelope');
+        const complimentBtn = document.getElementById('complimentBtn');
+        const complimentBox = document.getElementById('complimentBox');
+
+        // Старт взаимодействия
+        startBtn.addEventListener('click', (e) => {
+            const rect = startBtn.getBoundingClientRect();
+            createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 80);
+
+            welcomeModal.classList.add('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                welcomeModal.style.display = 'none';
+            }, 700);
+
+            mainContent.classList.remove('opacity-0');
+
+            setTimeout(() => {
+                heartContainer.classList.remove('scale-0');
+                heartContainer.classList.add('scale-100');
+                
+                const heartRect = heartContainer.getBoundingClientRect();
+                createSparkles(heartRect.left + heartRect.width / 2, heartRect.top + heartRect.height / 2, 120);
+            }, 300);
+
+            audio.startMelody();
+            musicIcon.className = 'fas fa-volume-up text-lg text-pink-300';
+        });
+
+        // Клик по главному сердцу для эффекта салюта
+        mainHeartSvg.addEventListener('click', (e) => {
+            const rect = mainHeartSvg.getBoundingClientRect();
+            createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 70);
+        });
+
+        // Кнопка салюта
+        fireworksBtn.addEventListener('click', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            // Запуск салюта из разных точек
+            createSparkles(width * 0.3, height * 0.4, 60);
+            createSparkles(width * 0.7, height * 0.4, 60);
+            createSparkles(width * 0.5, height * 0.3, 80);
+        });
+
+        // Включение/выключение музыки
+        musicToggle.addEventListener('click', () => {
+            if (audio.isPlaying) {
+                audio.stopMelody();
+                musicIcon.className = 'fas fa-volume-mute text-lg';
+            } else {
+                audio.startMelody();
+                musicIcon.className = 'fas fa-volume-up text-lg text-pink-300';
+            }
+        });
+
+        // Конвертик
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('open');
+            const rect = envelope.getBoundingClientRect();
+            createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 30);
+        });
+
+        // Комплименты
+        complimentBtn.addEventListener('click', () => {
+            const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+            
+            complimentBox.style.opacity = 0;
+            setTimeout(() => {
+                complimentBox.textContent = randomCompliment;
+                complimentBox.style.opacity = 1;
+            }, 200);
+
+            const rect = complimentBtn.getBoundingClientRect();
+            createSparkles(rect.left + rect.width / 2, rect.top + rect.height / 2, 25);
+        });
+
+        // Искорки при клике в любую точку
+        document.addEventListener('click', (e) => {
+            createSparkles(e.clientX, e.clientY, 10);
+        });
+    </script>
+</body>
+</html>
